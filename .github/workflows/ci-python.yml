@@ -2,7 +2,7 @@ name: CI - Python app Yaman
 
 on:
   push:
-    branches: [develop, feature/*]
+    branches: [develop, hotfix/*]
   pull_request:
     branches: [main]
 
