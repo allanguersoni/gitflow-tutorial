@@ -2,9 +2,9 @@ name: CI - Python app Yaman
 
 on:
   push:
-    branches: ["main"]
+    branches: [develop, feature/*]
   pull_request:
-    branches: ["main"]
+    branches: [main]
 
 jobs:
   build-and-run:
