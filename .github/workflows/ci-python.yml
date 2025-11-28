@@ -1,0 +1,23 @@
+name: CI - Python app Yaman
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build-and-run:
+    runs-on: ubuntu-lasted # hosted-runner
+
+    steps:
+    - name: Checkout do Código
+      uses: actions/checkout@v4
+
+    - name: Confdigurar python
+      uses: actions/steup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: Executar app.py
+      run: python app.py
