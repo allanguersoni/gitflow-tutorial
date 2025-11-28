@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-and-run:
-    runs-on: ubuntu-lasted # hosted-runner
+    runs-on: ubuntu-latest # hosted-runner
 
     steps:
     - name: Checkout do Código
