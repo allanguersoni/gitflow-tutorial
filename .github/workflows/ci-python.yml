@@ -60,7 +60,7 @@ jobs:
             -l performance/testes/site_yaman_results.jtl
         
       - name: Upload do resultado Jmeter .jtl
-        uses: action/upload-artifact@v4
+        uses: actions/upload-artifact@v4
         with:
           name: jmeter-results
           path: performance/tests/site_yaman_results.jtl
