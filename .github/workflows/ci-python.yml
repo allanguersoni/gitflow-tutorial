@@ -1,21 +1,22 @@
 name: CI - Python app Yaman
 
 on:
+  workflow_dispatch: # rodar manualmente pelo actions
   push:
-    branches: ["develop", "hotfix/*"]
+    branches: ["develop", "hotfix/*", "release/*"]
   pull_request:
     branches: ["main"]
 
 jobs:
   build-and-run:
-    runs-on: ubuntu-latest # hosted-runner , estava lasted
+    runs-on: ubuntu-latest # hosted-runner 
 
     steps:
     - name: Checkout do Código
       uses: actions/checkout@v4
 
     - name: Confdigurar python
-      uses: actions/setup-python@v5 # estava steup
+      uses: actions/setup-python@v5 
       with:
         python-version: '3.10'
         
@@ -26,10 +27,40 @@ jobs:
         echo "Password: $DB_PASSWORD"
       env:
         DB_USER: ${{ secrets.DB_USER }}
-        TOKEN: ${{ secrets.TOKEN }} # espacamento e n minusculo
+        TOKEN: ${{ secrets.TOKEN }} 
         DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
     
     - name: Executar app.py
       run: python app.py
       env:
         APY_KEY: ${{ secrets.APY_KEY }}
+  
+  performance-test:
+    # essa etapoo roda apros o buil-and-run terminar corretamente
+    needs: build-and-run
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+      
+      - name: Instalar Java e baixar o Jmeter
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y default-jre wget
+          wget https://downloads.apache.org/jmeter/binaries/apache-jmeter-5.6.3.tgz -O jmeter.tgz
+          tar -xzf jmeter.tgz
+          mv apache-jmeter-5.6.3 jmeter
+
+      - name: Exectuar teste de performance (site yaman)
+        run: |
+          ./jmeter/bin/jmeter \
+            -n \ 
+            -t performance/tests/site_yaman.jmx \
+            -l performance/testes/site_yaman_results.jtl
+        
+      - name: Upload do resultado Jmeter .jtl
+        uses: action/upload-artifact@v4
+        with:
+          name: jmeter-results
+          path: performance/tests/site_yaman_results.jtl
