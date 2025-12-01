@@ -55,9 +55,9 @@ jobs:
       - name: Exectuar teste de performance (site yaman)
         run: |
           ./jmeter/bin/jmeter \
-            -n \ 
+            -n \
             -t performance/tests/site_yaman.jmx \
-            -l performance/testes/site_yaman_results.jtl
+            -l performance/tests/site_yaman_results.jtl
         
       - name: Upload do resultado Jmeter .jtl
         uses: actions/upload-artifact@v4
