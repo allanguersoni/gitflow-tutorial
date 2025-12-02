@@ -12,31 +12,31 @@ jobs:
     runs-on: ubuntu-latest # hosted-runner 
 
     steps:
-    - name: Checkout do Código
-      uses: actions/checkout@v4
+      - name: Checkout do Código
+        uses: actions/checkout@v4
 
-    - name: Confdigurar python
-      uses: actions/setup-python@v5 
-      with:
-        python-version: '3.10'
+      - name: Configurar Python
+        uses: actions/setup-python@v5 
+        with:
+          python-version: '3.10'
         
-    - name: Testando variáveis secretas
-      run: |
-        echo "usuario: $DB_USER"
-        echo "token: $TOKEN"
-        echo "Password: $DB_PASSWORD"
-      env:
-        DB_USER: ${{ secrets.DB_USER }}
-        TOKEN: ${{ secrets.TOKEN }} 
-        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      - name: Testando variáveis secretas
+        run: |
+          echo "usuario: $DB_USER"
+          echo "token: $TOKEN"
+          echo "Password: $DB_PASSWORD"
+        env:
+          DB_USER: ${{ secrets.DB_USER }}
+          TOKEN: ${{ secrets.TOKEN }} 
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
     
-    - name: Executar app.py
-      run: python app.py
-      env:
-        APY_KEY: ${{ secrets.APY_KEY }}
+      - name: Executar app.py
+        run: python app.py
+        env:
+          APY_KEY: ${{ secrets.APY_KEY }}
   
   performance-test:
-    # essa etapoo roda apros o buil-and-run terminar corretamente
+    # essa etapa roda após o build-and-run terminar corretamente
     needs: build-and-run
     runs-on: ubuntu-latest
 
@@ -44,23 +44,24 @@ jobs:
       - name: Checkout do código
         uses: actions/checkout@v4
       
-      - name: Instalar Java e baixar o Jmeter
+      - name: Instalar Java, zip e baixar o JMeter
         run: |
           sudo apt-get update
-          sudo apt-get install -y default-jre wget
+          sudo apt-get install -y default-jre wget zip
           wget https://downloads.apache.org/jmeter/binaries/apache-jmeter-5.6.3.tgz -O jmeter.tgz
           tar -xzf jmeter.tgz
           mv apache-jmeter-5.6.3 jmeter
 
-      - name: Exectuar teste de performance (site yaman)
-        run: |
-          ./jmeter/bin/jmeter \
-            -n \
-            -t performance/tests/site_yaman.jmx \
-            -l performance/tests/site_yaman_results.jtl
-        
-      - name: Upload do resultado Jmeter .jtl
+      - name: Dar permissão de execução ao script Bash
+        run: chmod +x performance/scripts/run_site_yaman.sh
+
+      - name: Executar script de performance (JMeter + relatório HTML + ZIP)
+        run: ./performance/scripts/run_site_yaman.sh
+
+      - name: Upload do resultado JMeter (.jtl e ZIP)
         uses: actions/upload-artifact@v4
         with:
           name: jmeter-results
-          path: performance/tests/site_yaman_results.jtl
+          path: |
+            performance/results/site_yaman_results.jtl
+            performance/artifacts/site_yaman_report.zip
