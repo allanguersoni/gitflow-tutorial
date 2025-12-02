@@ -1,0 +1,17 @@
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
+1764620335356,2524,/-1,200,OK,Thread Group 1-1,text,true,,25840,1024,1,1,https://yaman.com.br/,544,0,361
+1764620335356,544,/-1-0,301,Moved Permanently,Thread Group 1-1,text,true,,182,512,1,1,http://yaman.com.br/,544,0,361
+1764620335903,1977,/-1-1,200,OK,Thread Group 1-1,text,true,,25658,512,1,1,https://yaman.com.br/,1832,0,1672
+1764620337884,427,/pt-br/sobre/-14,200,OK,Thread Group 1-1,text,true,,21251,2330,1,1,https://yaman.com.br/sobre-nos,139,0,0
+1764620337884,139,/pt-br/sobre/-14-0,308,Permanent Redirect,Thread Group 1-1,,true,,175,778,1,1,https://yaman.com.br/pt-br/sobre/,139,0,0
+1764620338024,135,/pt-br/sobre/-14-1,308,Permanent Redirect,Thread Group 1-1,,true,,169,777,1,1,https://yaman.com.br/pt-br/sobre,135,0,0
+1764620338159,152,/pt-br/sobre/-14-2,200,OK,Thread Group 1-1,text,true,,20907,775,1,1,https://yaman.com.br/sobre-nos,147,0,0
+1764620338313,441,/pt-br/predictor/-69,200,OK,Thread Group 1-1,text,true,,25988,2398,1,1,https://yaman.com.br/,151,0,0
+1764620338313,151,/pt-br/predictor/-69-0,308,Permanent Redirect,Thread Group 1-1,,true,,188,805,1,1,https://yaman.com.br/pt-br/predictor/,151,0,0
+1764620338464,142,/pt-br/predictor/-69-1,308,Permanent Redirect,Thread Group 1-1,,true,,142,804,1,1,https://yaman.com.br/pt-br/predictor,142,0,0
+1764620338607,147,/pt-br/predictor/-69-2,200,OK,Thread Group 1-1,text,true,,25658,789,1,1,https://yaman.com.br/,140,0,0
+1764620338756,290,/pt-br/contato/-106,200,OK,Thread Group 1-1,text,true,,17333,1581,1,1,https://yaman.com.br/contato,138,0,0
+1764620338756,139,/pt-br/contato/-106-0,308,Permanent Redirect,Thread Group 1-1,,true,,163,791,1,1,https://yaman.com.br/contato/,138,0,0
+1764620338895,151,/pt-br/contato/-106-1,200,OK,Thread Group 1-1,text,true,,17170,790,1,1,https://yaman.com.br/contato,147,0,0
+1764620339300,3,Debug Sampler,200,OK,Thread Group 1-1,text,true,,306,0,1,1,null,0,0,0
+1764620339304,0,Transaction Controller,200,"Number of samples in transaction : 0, number of failing samples : 0",,,true,,0,0,0,0,null,0,0,0
