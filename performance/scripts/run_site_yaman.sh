@@ -24,7 +24,7 @@ echo "Diretório do projeto (raiz): $BASE_DIR"
 # 2) Local do JMeter (GitHub x Windows)
 ############################################
 
-# Caminho padrão usado no GitHub Actions (JMeter baixado em ./jmeter)
+# Caminho padrao usado no GitHub Actions (JMeter baixado em ./jmeter)
 JMETER_HOME_DEFAULT="$BASE_DIR/jmeter"
 
 # Caminho do seu JMeter local no Windows (via Git Bash)
