@@ -3,11 +3,11 @@ name: CI - Python app Yaman
 on:
   workflow_dispatch: # rodar manualmente pelo actions
   push:
-    branches: ["develop", "hotfix/*", "release/*"]
+    branches: ["develop", "release/*"]
   pull_request:
     branches: ["main"]
 
-jobs:
+jobs: #add condicional
   build-and-run:
     runs-on: ubuntu-latest # hosted-runner 
 
@@ -56,7 +56,11 @@ jobs:
         run: chmod +x performance/scripts/run_site_yaman.sh
 
       - name: Executar script de performance (JMeter + relatório HTML + ZIP)
-        run: ./performance/scripts/run_site_yaman.sh
+        run: |
+          export vus=10
+          export ramp_up=20
+          export duration=60
+          ./performance/scripts/run_site_yaman.sh
 
       - name: Upload do resultado JMeter (.jtl e ZIP)
         uses: actions/upload-artifact@v4
