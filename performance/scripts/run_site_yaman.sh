@@ -80,12 +80,30 @@ rm -f "$RESULTS_JTL" "$REPORT_ZIP"
 rm -rf "$REPORT_DIR"/*
 
 ############################################
-# 4) Executa o JMeter em modo não GUI
+# 4) Parâmetros de carga (VUS, rampa, duração)
 ############################################
-echo ">>> Executando JMeter em modo não GUI..."
+
+# Valores padrão caso não venham do ambiente
+vus="${vus:-5}"
+ramp_up="${ramp_up:-10}"
+duration="${duration:-30}"
+
+echo ">>> Parâmetros usados no teste:"
+echo "Usuarios simultaneos = $vus"
+echo "Tempo de ramp_up  = $ramp_up"
+echo "Duracao = $duration"
+
+############################################
+# 5) Executa o JMeter em modo não GUI
+############################################
+
+echo ">>> Executando JMeter..."
 "$JMETER_BIN" \
   -n \
   -t "$TEST_PLAN" \
+  -Jvus="$vus" \
+  -Jramp_up="$ramp_up" \
+  -Jduration="$duration" \
   -l "$RESULTS_JTL" \
   -e \
   -o "$REPORT_DIR"
