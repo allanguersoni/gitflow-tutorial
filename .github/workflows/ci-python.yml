@@ -39,6 +39,11 @@ jobs:
     # essa etapa roda após o build-and-run terminar corretamente
     needs: build-and-run
     runs-on: ubuntu-latest
+    # Condicional: garante que performance só execute em push de develop/release/*
+    if: |
+      github.event_name == 'push' &&
+      startsWith(github.ref, 'refs/heads/develop') ||
+      startsWith(github.ref, 'refs/heads/release/')
 
     steps:
       - name: Checkout do código
@@ -65,3 +70,27 @@ jobs:
           path: |
             performance/results/site_yaman_results.jtl
             performance/artifacts/site_yaman_report.zip
+          # período de retenção do artifact em dias 
+          retention-days: 7
+  # ==========================================
+  # Lint / checagem simples em paralelo
+  #    - Demonstra paralelismo de jobs
+  # ==========================================
+  lint:
+    needs: build-and-run # depende do build, mas roda em paralelo com o performance-test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do codigo em LINT
+        uses: actions/checkout@v4
+      
+      - name: Configurar python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      
+      - name: Instalar Flake8 (lint python)
+        run: pip install flake8
+
+      - name: rodar Flake8 no app.py
+        run: flake8 app.py || true
