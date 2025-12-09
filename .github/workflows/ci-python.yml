@@ -3,7 +3,7 @@ name: CI - Python app Yaman
 on:
   workflow_dispatch: # rodar manualmente pelo actions
   push:
-    branches: ["develop", "release/*"]
+    branches: ["develop", "hotfix/*", "release/*"]
   pull_request:
     branches: ["main"]
 
@@ -69,3 +69,4 @@ jobs: #add condicional
           path: |
             performance/results/site_yaman_results.jtl
             performance/artifacts/site_yaman_report.zip
+          retention_days: 7
