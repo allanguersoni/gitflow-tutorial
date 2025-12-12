@@ -84,7 +84,7 @@ jobs:
       - name: Checkout do codigo em LINT
         uses: actions/checkout@v4
       
-      - name: Configurar python
+      - name: Configurar python novamente
         uses: actions/setup-python@v5
         with:
           python-version: "3.10"
