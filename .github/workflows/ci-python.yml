@@ -39,6 +39,11 @@ jobs: #add condicional
     # essa etapa roda após o build-and-run terminar corretamente
     needs: build-and-run
     runs-on: ubuntu-latest
+    # Condicional: garante que performance só execute em push de develop/release/*
+    if: |
+      github.event_name == 'push' &&
+      startsWith(github.ref, 'refs/heads/develop') ||
+      startsWith(github.ref, 'refs/heads/release/')
 
     steps:
       - name: Checkout do código
@@ -69,4 +74,3 @@ jobs: #add condicional
           path: |
             performance/results/site_yaman_results.jtl
             performance/artifacts/site_yaman_report.zip
-          retention_days: 7
