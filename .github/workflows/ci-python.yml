@@ -7,7 +7,7 @@ on:
   pull_request:
     branches: ["main"]
 
-jobs:
+jobs: #add condicional
   build-and-run:
     runs-on: ubuntu-latest # hosted-runner 
 
@@ -61,7 +61,11 @@ jobs:
         run: chmod +x performance/scripts/run_site_yaman.sh
 
       - name: Executar script de performance (JMeter + relatório HTML + ZIP)
-        run: ./performance/scripts/run_site_yaman.sh
+        run: |
+          export vus=10
+          export ramp_up=20
+          export duration=60
+          ./performance/scripts/run_site_yaman.sh
 
       - name: Upload do resultado JMeter (.jtl e ZIP)
         uses: actions/upload-artifact@v4
@@ -70,27 +74,3 @@ jobs:
           path: |
             performance/results/site_yaman_results.jtl
             performance/artifacts/site_yaman_report.zip
-          # período de retenção do artifact em dias 
-          retention-days: 7
-  # ==========================================
-  # Lint / checagem simples em paralelo
-  #    - Demonstra paralelismo de jobs
-  # ==========================================
-  lint:
-    needs: build-and-run # depende do build, mas roda em paralelo com o performance-test
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout do codigo em LINT
-        uses: actions/checkout@v4
-      
-      - name: Configurar python novamente
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.10"
-      
-      - name: Instalar Flake8 (lint python)
-        run: pip install flake8
-
-      - name: rodar Flake8 no app.py
-        run: flake8 app.py || true
